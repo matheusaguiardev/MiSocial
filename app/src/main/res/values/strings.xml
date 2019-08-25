@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MiSocial</string>
+    <string name="text_aguarde">Aguarde...</string>
+    <string name="text_created_by">Criado por: %s</string>
+    <string name="text_posted_by">Postado por: %s</string>
+    <string name="text_titulo">Titulo: %s</string>
+    <string name="title_activity_comments">CommentsActivity</string>
+</resources>

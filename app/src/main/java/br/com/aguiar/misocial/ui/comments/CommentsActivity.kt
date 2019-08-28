@@ -9,11 +9,11 @@ import br.com.aguiar.misocial.domain.comment.Comments
 import br.com.aguiar.misocial.ui.adapter.CommentAdapter
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_comments.*
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class CommentsActivity : AppCompatActivity() {
 
-    private val viewModel: CommentsViewModel by inject()
+    private val viewModel: CommentsViewModel by viewModel()
 
     companion object {
         const val POST_ID = "POST_ID"

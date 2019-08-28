@@ -37,6 +37,7 @@ dependencies {
 
     // Koin for Android
     implementation 'org.koin:koin-android:2.0.1'
+    implementation 'org.koin:koin-android-viewmodel:2.0.1'
 
     /*implementation 'org.koin:koin-android:2.0.0-rc-1'
     implementation 'org.koin:koin-androidx-scope:2.0.0-rc-1'

@@ -12,7 +12,7 @@ import br.com.aguiar.misocial.ui.adapter.PostAdapter
 import br.com.aguiar.misocial.ui.comments.CommentsActivity
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class HomeActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
         LoadingDialog()
     }
 
-    private val viewModel: HomeViewModel by inject()
+    private val viewModel: HomeViewModel by viewModel()
     private val adapter by lazy {
         PostAdapter(::itemCallbackClick, this)
     }

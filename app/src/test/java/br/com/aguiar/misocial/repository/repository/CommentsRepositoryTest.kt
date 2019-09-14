@@ -12,7 +12,7 @@ import okhttp3.MediaType
 import okhttp3.ResponseBody
 import org.junit.Assert
 import org.junit.Test
-import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.anyInt
 import retrofit2.Response
 
 class CommentsRepositoryTest {
@@ -50,23 +50,23 @@ class CommentsRepositoryTest {
 
     /*************** DADO ******************/
     private fun `dado que eu tenha uma lista de comentarios para baixar`(list: List<CommentsJson>) = runBlocking {
-        whenever(api.getCommentsFromService(any()))
+        whenever(api.getCommentsFromService(anyInt()))
             .thenReturn(async { Response.success(list) })
     }
 
     private fun `dado que eu tenha uma lista de comentarios para baixar e um erro e esperado`() =
         runBlocking {
-            whenever(api.getCommentsFromService(any()))
+            whenever(api.getCommentsFromService(anyInt()))
                 .thenReturn(async { Response.error<List<CommentsJson>>(500, ResponseBody.create(mediaType, "")) })
         }
 
     /*************** QUANDO ******************/
     private suspend fun `quando eu executar o metodo de chamada de busca os comentarios do servico`() {
-        expectedList = repository.fetchComments(any())
+        expectedList = repository.fetchComments(120)
     }
 
     private suspend fun `quando eu executar o metodo de chamada de busca de comentarios do servico com erro`() {
-        expectedEmptyList = repository.fetchComments(any())
+        expectedEmptyList = repository.fetchComments(-120)
     }
 
     /*************** ENTÃO ******************/

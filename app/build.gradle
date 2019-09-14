@@ -35,14 +35,13 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
 
+    // Tests
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0"
+    testImplementation 'android.arch.core:core-testing:1.1.1'
+
     // Koin for Android
     implementation 'org.koin:koin-android:2.0.1'
     implementation 'org.koin:koin-android-viewmodel:2.0.1'
-
-    /*implementation 'org.koin:koin-android:2.0.0-rc-1'
-    implementation 'org.koin:koin-androidx-scope:2.0.0-rc-1'
-    implementation "org.koin:koin-androidx-viewmodel:2.0.0-rc-1"
-    implementation 'org.koin:koin-core:2.0.0-rc-1'*/
 
     // Request
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'

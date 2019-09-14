@@ -9,10 +9,10 @@ import kotlinx.coroutines.withContext
 
 class CommentsRepositoryImp(private val api: CommentsApi) : CommentsRepository {
 
-    override suspend fun fetchComments(): List<Comments> {
+    override suspend fun fetchComments(postId: Int): List<Comments> {
         return try {
             val result = withContext(Dispatchers.IO) {
-                api.getCommentsFromService()
+                api.getCommentsFromService(postId)
             }.await()
 
             result.body()?.let { comments ->

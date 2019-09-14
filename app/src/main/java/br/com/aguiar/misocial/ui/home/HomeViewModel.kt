@@ -7,7 +7,10 @@ import br.com.aguiar.misocial.domain.post.Posts
 import br.com.aguiar.misocial.domain.post.PostsInteractor
 import br.com.aguiar.misocial.domain.user.UserInteractor
 import br.com.aguiar.misocial.domain.user.Users
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class HomeViewModel(
@@ -18,7 +21,7 @@ class HomeViewModel(
     private var homeJobs = Job()
     private var ownersJob = Job()
 
-    override val coroutineContext: CoroutineContext = Dispatchers.Main + homeJobs
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + homeJobs + ownersJob
 
     private val postList = MutableLiveData<List<Posts>>()
     fun postList(): LiveData<List<Posts>> = postList

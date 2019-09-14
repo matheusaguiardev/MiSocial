@@ -5,4 +5,7 @@
     <string name="text_posted_by">Postado por: %s</string>
     <string name="text_titulo">Titulo: %s</string>
     <string name="title_activity_comments">CommentsActivity</string>
+    <string name="text_no_post">Nenhuma postagem foi encontrada</string>
+    <string name="text_guest">Guest</string>
+    <string name="text_no_comment">Nenhum comentário foi encontrado. Por favor, tente novamente mais tarde.</string>
 </resources>

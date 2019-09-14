@@ -26,17 +26,18 @@ class CommentsViewModel(
     fun commentsList(): LiveData<List<Comments>> = commentsList
 
     fun fetchComments(postId: Int) {
-
         commentsJobs = launch {
             loading.value = true
-            val result = interactor()
+            val result = interactor(postId)
             commentsList.value = result
-                .filter { it.postId == postId }
                 .sortedByDescending { it.id }
             loading.value = false
         }
-
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        commentsJobs.cancel()
+    }
 
 }

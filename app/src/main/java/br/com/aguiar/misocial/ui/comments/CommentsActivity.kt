@@ -8,6 +8,8 @@ import br.com.aguiar.misocial.R
 import br.com.aguiar.misocial.domain.comment.Comments
 import br.com.aguiar.misocial.ui.adapter.CommentAdapter
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
+import br.com.aguiar.misocial.ui.extension.toHide
+import br.com.aguiar.misocial.ui.extension.toVisible
 import kotlinx.android.synthetic.main.activity_comments.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -42,8 +44,15 @@ class CommentsActivity : AppCompatActivity() {
 
     private fun commentsObserver(commentList: List<Comments>?){
         commentList?.let{
-            setUpList()
-            adapter.dataSource = it
+            if (it.isNotEmpty()) {
+                setUpList()
+                adapter.dataSource = it
+                emptyStateText.toHide()
+                commentsList.toVisible()
+            } else {
+                emptyStateText.toVisible()
+                commentsList.toHide()
+            }
         }
     }
 

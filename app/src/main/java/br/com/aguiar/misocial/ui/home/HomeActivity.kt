@@ -11,6 +11,8 @@ import br.com.aguiar.misocial.domain.user.Users
 import br.com.aguiar.misocial.ui.adapter.PostAdapter
 import br.com.aguiar.misocial.ui.comments.CommentsActivity
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
+import br.com.aguiar.misocial.ui.extension.toHide
+import br.com.aguiar.misocial.ui.extension.toVisible
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -24,6 +26,11 @@ class HomeActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModel()
     private val adapter by lazy {
         PostAdapter(::itemCallbackClick, this)
+    }
+
+    companion object {
+        private const val NUM_COLUMN = 1
+        private const val DIALOG_TAG = "fragment_alert"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,15 +48,22 @@ class HomeActivity : AppCompatActivity() {
 
     private fun postObservers(list: List<Posts>?) {
         list?.let {
-            viewModel.fetchOwners()
-            adapter.setList(it)
-            setUpList()
+            if (it.isNotEmpty()) {
+                viewModel.fetchOwners()
+                adapter.setList(it)
+                setUpList()
+                postsList.toVisible()
+                emptyStateText.toHide()
+            } else {
+                postsList.toHide()
+                emptyStateText.toVisible()
+            }
         }
     }
 
     private fun setUpList() {
         if (postsList.adapter == null) {
-            postsList.layoutManager = GridLayoutManager(this, 1)
+            postsList.layoutManager = GridLayoutManager(this, NUM_COLUMN)
             postsList.adapter = adapter
         }
     }
@@ -57,7 +71,9 @@ class HomeActivity : AppCompatActivity() {
     private fun updatePostOwners(owner: List<Users>?) {
         owner?.let {
             val list = adapter.getList()
-            list.map { post -> post.createdBy = owner.find { it.id == post.userId }?.userName ?: "Guest"}
+            list.map { post ->
+                post.createdBy = owner.find { it.id == post.userId }?.userName ?: getString(R.string.text_guest)
+            }
             adapter.setList(list)
         }
     }
@@ -81,7 +97,7 @@ class HomeActivity : AppCompatActivity() {
     private fun showAlertDialog() {
         if (!(alertDialog.isAdded && alertDialog.isVisible)) {
             val fm = supportFragmentManager
-            alertDialog.show(fm, "fragment_alert")
+            alertDialog.show(fm, DIALOG_TAG)
         }
     }
 

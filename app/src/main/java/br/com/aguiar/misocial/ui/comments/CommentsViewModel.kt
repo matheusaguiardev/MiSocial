@@ -15,9 +15,10 @@ class CommentsViewModel(
     private val interactor: CommentsInteractor
 ) : ViewModel(), CoroutineScope {
 
+    private var mainJob = Job()
     private var commentsJobs = Job()
 
-    override val coroutineContext: CoroutineContext = Dispatchers.Main + commentsJobs
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + mainJob
 
     private val loading = MutableLiveData<Boolean>()
     fun loading(): LiveData<Boolean> = loading
@@ -38,6 +39,7 @@ class CommentsViewModel(
     override fun onCleared() {
         super.onCleared()
         commentsJobs.cancel()
+        mainJob.cancel()
     }
 
 }

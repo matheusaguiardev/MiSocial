@@ -18,10 +18,11 @@ class HomeViewModel(
     private val userInteractor: UserInteractor
 ) : ViewModel(), CoroutineScope {
 
+    private var mainJob = Job()
     private var homeJobs = Job()
     private var ownersJob = Job()
 
-    override val coroutineContext: CoroutineContext = Dispatchers.Main + homeJobs + ownersJob
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + mainJob
 
     private val postList = MutableLiveData<List<Posts>>()
     fun postList(): LiveData<List<Posts>> = postList
@@ -33,7 +34,7 @@ class HomeViewModel(
     fun loading(): LiveData<Boolean> = loading
 
     fun fetchPosts() {
-
+        if(homeJobs.isActive) return
         homeJobs = launch {
             loading.value = true
             val result = interactor()
@@ -44,6 +45,7 @@ class HomeViewModel(
     }
 
     fun fetchOwners() {
+        if(ownersJob.isActive) return
         ownersJob = launch {
             val result = userInteractor()
             ownerList.value = result
@@ -54,6 +56,7 @@ class HomeViewModel(
         super.onCleared()
         homeJobs.cancel()
         ownersJob.cancel()
+        mainJob.cancel()
     }
 
 }

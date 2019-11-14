@@ -7,13 +7,16 @@ import br.com.aguiar.misocial.domain.post.Posts
 import br.com.aguiar.misocial.domain.post.PostsInteractor
 import br.com.aguiar.misocial.domain.user.UserInteractor
 import br.com.aguiar.misocial.domain.user.Users
+import dagger.Provides
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class HomeViewModel(
+
+class HomeViewModel @Inject constructor(
     private val interactor: PostsInteractor,
     private val userInteractor: UserInteractor
 ) : ViewModel(), CoroutineScope {
@@ -34,7 +37,6 @@ class HomeViewModel(
     fun loading(): LiveData<Boolean> = loading
 
     fun fetchPosts() {
-        if(homeJobs.isActive) return
         homeJobs = launch {
             loading.value = true
             val result = interactor()
@@ -45,7 +47,6 @@ class HomeViewModel(
     }
 
     fun fetchOwners() {
-        if(ownersJob.isActive) return
         ownersJob = launch {
             val result = userInteractor()
             ownerList.value = result

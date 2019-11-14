@@ -6,8 +6,9 @@ import br.com.aguiar.misocial.domain.user.Users
 import br.com.aguiar.misocial.domain.user.UsersRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class UsersRepositoryImp(private val api: UsersApi) : UsersRepository {
+class UsersRepositoryImp @Inject constructor(private val api: UsersApi) : UsersRepository {
 
     override suspend fun fetchUsers(): List<Users> {
         return try {

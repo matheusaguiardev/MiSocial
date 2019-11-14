@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+def daggerVersion = '2.25.2'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -21,6 +25,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    kapt {
+        generateStubs = true
+    }
+
+
 }
 
 dependencies {
@@ -40,8 +50,16 @@ dependencies {
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
     // Koin for Android
-    implementation 'org.koin:koin-android:2.0.1'
-    implementation 'org.koin:koin-android-viewmodel:2.0.1'
+    // implementation 'org.koin:koin-android:2.0.1'
+    // implementation 'org.koin:koin-android-viewmodel:2.0.1'
+
+    // Dagger for Android
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion" // If you're using classes in dagger.android
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion" // if you use the support libraries
+
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Request
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'

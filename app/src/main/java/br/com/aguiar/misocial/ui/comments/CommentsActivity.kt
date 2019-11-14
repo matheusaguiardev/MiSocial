@@ -10,12 +10,14 @@ import br.com.aguiar.misocial.ui.adapter.CommentAdapter
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
 import br.com.aguiar.misocial.ui.extension.toHide
 import br.com.aguiar.misocial.ui.extension.toVisible
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_comments.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
-class CommentsActivity : AppCompatActivity() {
+class CommentsActivity : DaggerAppCompatActivity() {
 
-    private val viewModel: CommentsViewModel by viewModel()
+    @Inject
+    lateinit var viewModel: CommentsViewModel
 
     companion object {
         const val POST_ID = "POST_ID"
@@ -35,11 +37,15 @@ class CommentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
 
-        with(viewModel){
-            loading().observe(this@CommentsActivity, Observer(::loadingObserver))
-            commentsList().observe(this@CommentsActivity, Observer(::commentsObserver))
-            fetchComments(postId)
+        viewModel?.let {
+            with(it){
+                loading().observe(this@CommentsActivity, Observer(::loadingObserver))
+                commentsList().observe(this@CommentsActivity, Observer(::commentsObserver))
+                fetchComments(postId)
+            }
         }
+
+
     }
 
     private fun commentsObserver(commentList: List<Comments>?){

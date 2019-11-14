@@ -13,17 +13,21 @@ import br.com.aguiar.misocial.ui.comments.CommentsActivity
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
 import br.com.aguiar.misocial.ui.extension.toHide
 import br.com.aguiar.misocial.ui.extension.toVisible
+import dagger.android.AndroidInjection
+import dagger.android.DaggerActivity
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
-
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : DaggerAppCompatActivity() {
 
     private val alertDialog by lazy {
         LoadingDialog()
     }
 
-    private val viewModel: HomeViewModel by viewModel()
+    @Inject
+    lateinit var viewModel: HomeViewModel
+
     private val adapter by lazy {
         PostAdapter(::itemCallbackClick, this)
     }
@@ -36,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         with(viewModel) {
             postList().observe(this@HomeActivity, Observer(::postObservers))
             loading().observe(this@HomeActivity, Observer(::loadingObserver))

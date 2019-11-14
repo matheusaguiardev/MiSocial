@@ -6,8 +6,9 @@ import br.com.aguiar.misocial.domain.comment.Comments
 import br.com.aguiar.misocial.domain.comment.CommentsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CommentsRepositoryImp(private val api: CommentsApi) : CommentsRepository {
+class CommentsRepositoryImp @Inject constructor(private val api: CommentsApi) : CommentsRepository {
 
     override suspend fun fetchComments(postId: Int): List<Comments> {
         return try {

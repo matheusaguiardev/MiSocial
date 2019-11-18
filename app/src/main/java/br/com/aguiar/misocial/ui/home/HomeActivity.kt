@@ -2,7 +2,6 @@ package br.com.aguiar.misocial.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.aguiar.misocial.R
@@ -13,8 +12,6 @@ import br.com.aguiar.misocial.ui.comments.CommentsActivity
 import br.com.aguiar.misocial.ui.dialog.LoadingDialog
 import br.com.aguiar.misocial.ui.extension.toHide
 import br.com.aguiar.misocial.ui.extension.toVisible
-import dagger.android.AndroidInjection
-import dagger.android.DaggerActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
